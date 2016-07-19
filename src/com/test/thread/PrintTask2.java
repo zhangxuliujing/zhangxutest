@@ -15,7 +15,7 @@ public class PrintTask2 implements Runnable {
 	
 	@Override
 	public void run(){
-		System.out.println(name + " is running.");
+		//System.out.println(name + " is running.");
 		System.out.println(name + "："+System.currentTimeMillis());
 		try{
 			Thread.sleep(10);
