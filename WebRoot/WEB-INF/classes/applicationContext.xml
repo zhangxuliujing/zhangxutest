@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:aop="http://www.springframework.org/schema/aop"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.0.xsd">
+	<bean id="loginController" class="com.pb.web.controller.LoginController">
+		<property name="successView" value="/zh_CN/test/showAccount"></property>
+		<property name="failView" value="/zh_CN/test/failPage"></property>
+		<!-- <property name="initAndDestroySeqBean" ref="InitAndDestroySeqBean" /> -->
+	</bean>
+	<bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/zh_CN/login/login.do">loginController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 这个配置是配置JSP页面的位置，按照你自己的配置来配 -->
+		<!--<property name="prefix" value="/"></property>-->
+		<property name="prefix" value="/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	
+	<bean id="TaskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="5" />
+		<property name="maxPoolSize" value="10" />
+	</bean>
+	
+	<!-- <bean id="InitAndDestroySeqBean" class="com.test.InitAndDestroySeqBean" init-method="initMethod" destroy-method="destroyMethod"/>  -->
+	
+	<!-- <bean id="AppTest" class="com.test.App" init-method = "execute">
+ 		<property name="printThread" ref="PrintThread" />
+	</bean> -->
+	
+	<bean id="AppTest2" class="com.test.App2" init-method = "execute">
+ 		<property name="taskExecutor" ref="TaskExecutor" />
+ 		<property name="printTask1" ref="PrintTask1" />
+ 		<property name="printTask2" ref="PrintTask2" />
+	</bean>
+	
+	<bean id="PrintThread" class="com.test.thread.PrintThread">
+	</bean>
+	
+	<bean id="PrintTask1" class="com.test.thread.PrintTask2">
+	</bean>
+	
+	<bean id="PrintTask2" class="com.test.thread.PrintTask2">
+	</bean>
+</beans>
